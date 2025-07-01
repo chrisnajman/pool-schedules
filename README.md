@@ -10,7 +10,7 @@ The **admin interface** is optimized for **tablet and desktop devices**, reflect
 
 - Select schedule items for each day using radio buttons grouped by time slot and activity type.
 - Use the tab interface to switch between days (Monday through Sunday).
-- Changes are automatically saved to `localStorage`, so data is retained on page reload.
+- On form submission, changes are automatically saved to `localStorage`, so data is retained on page reload.
 
 ### Chart Page (daily-pool-chart.html)
 

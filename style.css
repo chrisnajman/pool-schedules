@@ -631,7 +631,7 @@ button[role="tab"] {
         border-radius: var(--border-radius);
         cursor: pointer;
         text-decoration: underline;
-        text-underline-offset: 0.25rem;
+        text-underline-offset: 0.4rem;
 
         &:hover {
             opacity: 0.75;
