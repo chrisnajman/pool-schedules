@@ -225,11 +225,7 @@ code {
 
 .header,
 .footer {
-    background: var(--body-bg) url("./img/pool.png") left top repeat;
-
-    &.admin {
-        background: var(--body-bg) url("./img/pool-grey.png") left top repeat;
-    }
+    background: var(--body-bg) url("./img/pool.webp") left top repeat;
 }
 
 .header {
