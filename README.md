@@ -114,3 +114,46 @@ The layout and functionality have been verified in both browser and device simul
 1. Clone or download the repository to your local machine.
 2. Open the project folder and start a simple HTTP server (e.g., using `Live Server` in VS Code or Python's `http.server` module).
 3. Open the project in a modern browser (e.g., Chrome, Firefox, or Edge).
+
+---
+
+## Build and Deployment Notes
+
+### Installing Dependencies
+
+Before running the build commands, install the required packages as dev dependencies:
+
+```bash
+npm install --save-dev esbuild postcss postcss-nesting postcss-cli cssnano
+```
+
+### Why `/docs`?
+
+- The `/docs` folder contains optimized production-ready assets, including:
+  - `bundle.js`: the JavaScript bundled into a single file (no modules)
+  - `style.min.css`: the CSS processed with nesting flattened and minified
+- The original source files (`index.js`, files in `js-modules/`, `style.css` with nesting, etc.) remain in the project root for easier development and editing.
+- GitHub Pages is configured to serve the site from the `/docs` folder instead of the root, so your published site uses these optimized files.
+
+### The `postcss.config.js` file
+
+- Located in the project root, this configuration file instructs PostCSS how to process your CSS:
+  - It enables CSS nesting support with `postcss-nesting`.
+  - It minifies the final CSS using `cssnano`.
+- This file is used when running the CSS build command (`npx postcss style.css --output docs/style.min.css`).
+
+### Summary of Build Steps (for contributors)
+
+To update the built assets in `/docs` after editing source files:
+
+1. Run the JavaScript bundling and minification:
+   ```bash
+   npx esbuild index.js --bundle --minify --target=es2015 --outfile=docs/bundle.js
+   ```
+2. Process and minify CSS with PostCSS:
+   ```bash
+   npx postcss style.css --output docs/style.min.css
+   ```
+3. Ensure any updated HTML files in `/docs` reference `bundle.js` and `style.min.css` (instead of the original module scripts or unminified CSS).
+
+---
