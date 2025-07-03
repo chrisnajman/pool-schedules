@@ -121,10 +121,10 @@ The layout and functionality have been verified in both browser and device simul
 
 ### Installing Dependencies
 
-Before running the build commands, install the required packages as dev dependencies:
+Before running the build commands, install the required packages (`esbuild postcss postcss-nesting postcss-cli cssnano`) as dev dependencies:
 
 ```bash
-npm install --save-dev esbuild postcss postcss-nesting postcss-cli cssnano
+npm i
 ```
 
 ### Why `/docs`?
@@ -140,20 +140,35 @@ npm install --save-dev esbuild postcss postcss-nesting postcss-cli cssnano
 - Located in the project root, this configuration file instructs PostCSS how to process your CSS:
   - It enables CSS nesting support with `postcss-nesting`.
   - It minifies the final CSS using `cssnano`.
-- This file is used when running the CSS build command (`npx postcss style.css --output docs/style.min.css`).
+- This file is automatically used during the **build** process when PostCSS runs.
 
-### Summary of Build Steps (for contributors)
+### Build Script
 
-To update the built assets in `/docs` after editing source files:
+To update the built assets in `/docs` after editing source files, run:
 
-1. Run the JavaScript bundling and minification:
-   ```bash
-   npx esbuild index.js --bundle --minify --target=es2015 --outfile=docs/bundle.js
-   ```
-2. Process and minify CSS with PostCSS:
-   ```bash
-   npx postcss style.css --output docs/style.min.css
-   ```
-3. Ensure any updated HTML files in `/docs` reference `bundle.js` and `style.min.css` (instead of the original module scripts or unminified CSS).
+```bash
+npm run build
+```
+
+This runs the following tasks:
+
+- Bundles and minifies JavaScript using `esbuild`.
+- Processes and minifies CSS using `postcss`.
+
+> [!IMPORTANT]
+> Ensure that your updated HTML files in `/docs` reference:
+
+```html
+<script
+  src="./bundle.js"
+  defer
+></script>
+<link
+  rel="stylesheet"
+  href="./style.min.css"
+/>
+```
+
+(instead of the original module scripts or unminified CSS).
 
 ---
