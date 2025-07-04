@@ -119,6 +119,8 @@ The layout and functionality have been verified in both browser and device simul
 
 ## Build and Deployment Notes
 
+The following assumes you have `node` installed on your machine.
+
 ### Installing Dependencies
 
 Before running the build commands, install the required packages (`esbuild postcss postcss-nesting postcss-cli cssnano`) as dev dependencies:
@@ -135,6 +137,9 @@ npm i
 - The original source files (`index.js`, files in `js-modules/`, `style.css` with nesting, etc.) remain in the project root for easier development and editing.
 - GitHub Pages is configured to serve the site from the `/docs` folder instead of the root, so your published site uses these optimized files.
 
+> [!IMPORTANT]
+> If you're publishing on GitHub Pages, make sure the Pages setting is configured to serve from the `/docs` folder on the `main` branch.
+
 ### The `postcss.config.js` file
 
 - Located in the project root, this configuration file instructs PostCSS how to process your CSS:
@@ -144,19 +149,12 @@ npm i
 
 ### Build Script
 
-To update the built assets in `/docs` after editing source files, run:
-
-```bash
-npm run build
-```
-
-This runs the following tasks:
-
-- Bundles and minifies JavaScript using `esbuild`.
-- Processes and minifies CSS using `postcss`.
-
 > [!IMPORTANT]
-> Ensure that your updated HTML files in `/docs` reference:
+> Before running the build script:
+
+- Make sure you have _manually_ **copied** all files (images, favicons, etc ) that are used in the site from the project root to `/docs`.
+- Make sure you have _manually_ **copied** all HTML files from the project root to `/docs` (excluding e.g. `README.md`, `LICENSE` and `.gitignore`).
+- Ensure that the `script` and `link rel="stylesheet"` tags in the updated HTML files in `/docs` are coded as:
 
 ```html
 <script
@@ -169,6 +167,30 @@ This runs the following tasks:
 />
 ```
 
-(instead of the original module scripts or unminified CSS).
+... instead of the code in the HTML found in the project root:
+
+```html
+<script
+  src="./index.js"
+  type="module"
+></script>
+<link
+  rel="stylesheet"
+  href="./style.css"
+/>
+```
+
+#### Run the Build Script
+
+To update the built assets in `/docs` after editing source files, run:
+
+```bash
+npm run build
+```
+
+This runs the following tasks:
+
+- Bundles and minifies JavaScript using `esbuild`.
+- Processes and minifies CSS using `postcss`.
 
 ---
